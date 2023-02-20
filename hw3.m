@@ -2,6 +2,7 @@
 %% AMSC420 - Jiatong Liang and Adam Levav
 %% Question 1 Preprocessing Data
 
+% Reading in the Excel file as a table then converting it into a matrix
 mytable = readtable('project8_data.xlsx');
 x = mytable{2:3,13:end};
 x = transpose(x);
