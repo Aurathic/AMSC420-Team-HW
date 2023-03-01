@@ -59,10 +59,10 @@ params = num2cell(squeeze(omega1(1,1,1,:)));
 [gamma, minVal] = minimizeGamma(t0, Tmax, Y, Rsim, 1)
 
 %%
-% gammas(alphaInd, betaInd, deltaInd, NInd, p) contains 
+% gammas(alphaInd, betaInd, NInd, p) contains 
 % gamma as calculated to minimize p-norm of residual
 % of actual results as compared to euler model 
-% with given parameters (alpha, beta, delta, N)
+% with given parameters (alpha, beta, N)
 % J(...) contains the minimized function value
 gammas = zeros(alphaLen, betaLen, NLen, pLen);
 J = zeros(alphaLen, betaLen, NLen, pLen);
