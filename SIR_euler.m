@@ -8,7 +8,6 @@ function [Sout,Iout, Rout] = SIR_euler(I0, Tmax, alpha, beta, N)
     Ssim = zeros(Nsteps,1);
     Isim = zeros(Nsteps,1);
     Rsim = zeros(Nsteps,1);
-    % Ysim = zeros(Nsteps, 1);
     
     % Initialization
     Ssim(1) = N;
@@ -24,9 +23,6 @@ function [Sout,Iout, Rout] = SIR_euler(I0, Tmax, alpha, beta, N)
         dSdt = -x;
         dIdt =  x - alpha * Iprev;
         dRdt =  alpha * Iprev;
-        % Is this included in the model??? FIX LATER
-        % Y = gamma*Rprev
-        %[dSdt, dEdt, dIdt, dRdt]
 
         Ssim(i) = Sprev + dSdt * h;
         Isim(i) = Iprev + dIdt * h;
