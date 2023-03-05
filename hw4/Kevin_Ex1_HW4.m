@@ -51,46 +51,6 @@ I0 = I(1)
     generateParams1(Nmax);
 
 %%
-% Testing
-% Euler scheme function defined in SEIR_euler.m
-params = num2cell(squeeze(omega1(1,1,1,:)));
-[alpha, beta, N] = params{:}
-[Ssim, Isim, Rsim] = SIR_euler(I0,Tmax,alpha,beta,N)
-[gamma, minVal] = minimizeGamma(t0, Tmax, Y, Rsim, 1)
-
-%%
-% gammas(alphaInd, betaInd, NInd, p) contains 
-% gamma as calculated to minimize p-norm of residual
-% of actual results as compared to euler model 
-% with given parameters (alpha, beta, N)
-% J(...) contains the minimized function value
-gammas = zeros(alphaLen, betaLen, NLen, pLen);
-J = zeros(alphaLen, betaLen, NLen, pLen);
-
-% WARNING: Takes a while to calculate
-fprintf("alphas iterated over:")
-for alphaInd = 1:alphaLen
-    fprintf("%.2f, ", alphaSet(alphaInd))
-    for betaInd = 1:betaLen
-            for NInd = 1:NLen
-                % Get parameters from set, use Euler scheme
-                params = num2cell(squeeze(omega1(alphaInd, betaInd, NInd, :)));
-                [alpha, beta, N] = params{:};
-                [Ssim, Isim, Rsim] = SIR_euler(I0, Tmax, alpha, beta, N);
-                
-                % For each p, find gamma minimizing p-norm & store
-                for pInd = 1:pLen
-                    p = pSet(pInd);
-                    % Function defined in minimizeGamma.m
-                    [gamma, minVal] = minimizeGamma(t0, Tmax, Y, Rsim, p);
-                    gammas(alphaInd, betaInd, NInd, pInd) = gamma;
-                    J(alphaInd, betaInd, NInd, pInd) = minVal;
-                end
-            end
-    end
-end
-
-%%
 paramMinp = cell(pLen,4); % Store {alpha, beta, gamma, N}
 
 % For each p value...
@@ -105,7 +65,6 @@ for pInd = 1:pLen
 
     % Find parameters at that index
     gammaMin = gammasp(Ind);
-    % I changed this parameter to 3, NOT SURE IF IT NEEDED TO BE 4
     omegaTemp = reshape(omega1, [], 3);
     paramMin = num2cell(omegaTemp(Ind,:));
     [alphaMin, betaMin, NMin] = paramMin{:};
@@ -115,22 +74,8 @@ for pInd = 1:pLen
         "alpha = %.3f, beta = %.3f, gamma = %.3f,N = %g\n" + ...
         "with an error of %f\n\n", ...
         p,alphaMin, betaMin, gammaMin, NMin, M);
-    % Store minimum parameter values for Exercise 2 Part 3
+    % Store minimum parameter values for Exercise 1 Part 3
     paramMinp(pInd,:) = {alphaMin, betaMin, gammaMin, NMin};
-end
-
-%%
-% (α, β) → J = J(α, β, N-hat, γ-hat)
-for pInd = 1:pLen
-    params = omega1(:, :, NMinInd, :);
-    alphas = reshape(params(:,:,:,1), alphaLen, []);
-    betas = reshape(params(:,:,:,2), [], betaLen);
-    Jparams = J(:, :, NMinInd, pInd); 
-
-    figure
-    contour(alphas, betas, Jparams);
-    title(['p = ', num2str(pSet(pInd))])
-    xlabel("alpha"); ylabel("beta")
 end
 
 %% Exercise 1 Part 3

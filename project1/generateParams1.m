@@ -1,9 +1,5 @@
-function [alphaLen, betaLen, NLen, omega] = generateParams1(Nmax)
+function [alphaLen, betaLen, NLen, omega] = generateParams1(alphaSet, R0Set, NfracSet, Nmax)
     % Compute set omega of possible values for (alpha, beta, N)
-    alphaSet = 0.05:0.01:0.2;
-    R0Set = 1.5:0.1:1.9;
-    NfracSet = 0.02:0.01:0.1;
-
     alphaLen = length(alphaSet);
     betaLen = length(R0Set);
     NLen = length(NfracSet);
