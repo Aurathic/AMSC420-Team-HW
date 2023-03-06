@@ -1,4 +1,4 @@
-function [J,gammas] = SIR_euler_allParams(t0, Tmax, I0, Y, omega1, pSet)
+function [J,gammas] = SIR_euler_allParams(t0, Tmax, I0, Y, I, omega1, pSet)
     % gammas(alphaInd, betaInd, NInd, p) contains 
     % gamma as calculated to minimize p-norm of residual
     % of actual results as compared to euler model 
@@ -7,7 +7,9 @@ function [J,gammas] = SIR_euler_allParams(t0, Tmax, I0, Y, omega1, pSet)
     % WARNING: Takes a while to calculate
     
     % Get number of variations of each parameter
+    size(omega1)
     omegaLens = num2cell(size(omega1));
+    omegaLens
     [alphaLen, betaLen, NLen, ~] = omegaLens{:};
     pLen = length(pSet);
 
@@ -28,9 +30,9 @@ function [J,gammas] = SIR_euler_allParams(t0, Tmax, I0, Y, omega1, pSet)
                 for pInd = 1:pLen
                     p = pSet(pInd);
                     % Function defined in minimizeGamma.m
-                    [gamma, minVal] = minimizeGamma(t0, Tmax, Y, Rsim, p);
+                    [gamma, ~] = minimizeGamma(t0, Tmax, Y, Rsim, p);
                     gammas(alphaInd, betaInd, NInd, pInd) = gamma;
-                    J(alphaInd, betaInd, NInd, pInd) = minVal;
+                    J(alphaInd, betaInd, NInd, pInd) = objectiveFunction(Y(t0:t0+Tmax), Rsim, I(t0:t0+Tmax), Isim, gamma, 1, p);
                 end
             end
         end

@@ -16,11 +16,13 @@ function [Sout, Eout, Iout, Rout] = SEIR_euler(I0, Tmax, alpha, beta, delta, N)
     Isim(1) = I0;
     Rsim(1) = 0;
 
+    Ntot = Ssim(1)+Esim(1)+Isim(1)+Rsim(1);
+
     % Steps
     for i = 2:Nsteps
         % t = h*(i-1);
         [Sprev, Eprev, Iprev, Rprev] = deal(Ssim(i-1), Esim(i-1), Isim(i-1), Rsim(i-1));
-        x = beta * Sprev * Iprev / N;
+        x = beta * Sprev * Iprev / Ntot;
 
         dSdt = -x;
         dEdt =  x - delta * Eprev;

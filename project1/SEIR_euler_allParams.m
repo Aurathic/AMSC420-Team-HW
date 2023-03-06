@@ -29,8 +29,9 @@ function [J,gammas] = SEIR_euler_allParams(t0, Tmax, I0, Y, omega2, pSet)
                     for pInd = 1:pLen
                         p = pSet(pInd);
                         % Function defined in minimizeGamma.m
-                        [gamma, minVal] = minimizeGamma(t0, Tmax, Y, Rsim, p);
+                        [gamma, ~] = minimizeGamma(t0, Tmax, Y, Rsim, p);
                         gammas(alphaInd, betaInd, deltaInd, NInd, pInd) = gamma;
+                        
                         J(alphaInd, betaInd, deltaInd, NInd, pInd) = minVal;
                     end
                 end

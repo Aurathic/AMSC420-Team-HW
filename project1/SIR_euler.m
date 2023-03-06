@@ -14,11 +14,13 @@ function [Sout,Iout, Rout] = SIR_euler(I0, Tmax, alpha, beta, N)
     Isim(1) = I0;
     Rsim(1) = 0;
 
+    Ntot = Ssim(1)+Isim(1)+Rsim(1);
+
     % Steps
     for i = 2:Nsteps
         % t = h*(i-1);
         [Sprev, Iprev, Rprev] = deal(Ssim(i-1), Isim(i-1), Rsim(i-1));
-        x = beta * Sprev * Iprev / N;
+        x = beta * Sprev * Iprev / Ntot;
 
         dSdt = -x;
         dIdt =  x - alpha * Iprev;
