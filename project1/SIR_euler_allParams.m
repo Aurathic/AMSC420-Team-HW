@@ -7,9 +7,7 @@ function [J,gammas] = SIR_euler_allParams(t0, Tmax, I0, Y, I, omega1, pSet)
     % WARNING: Takes a while to calculate
     
     % Get number of variations of each parameter
-    size(omega1)
     omegaLens = num2cell(size(omega1));
-    omegaLens
     [alphaLen, betaLen, NLen, ~] = omegaLens{:};
     pLen = length(pSet);
 
