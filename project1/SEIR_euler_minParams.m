@@ -1,4 +1,4 @@
-function [alphaMinInd, betaMinInd, deltaMinInd, NMinInd, paramMinp] = SEIR_euler_minParams(omega2, pSet, J, gammas)
+function [alphaMinInd, betaMinInd, deltaMinInd, NMinInd, paramMinp] = SEIR_euler_minParams(omega2, pSet, J, gammas, Nmax)
     pLen = length(pSet);
     paramMinp = cell(pLen,5); % Store {alpha, beta, gamma, delta, N}
     
@@ -21,8 +21,9 @@ function [alphaMinInd, betaMinInd, deltaMinInd, NMinInd, paramMinp] = SEIR_euler
         % Print result
         fprintf("For p = %d, the parameters which reduce the error are\n" + ...
             "alpha = %.3f, beta = %.3f, gamma = %.3f, delta = %.3f, N = %g\n" + ...
+            "(R0 = %.3f, Nfrac = %.3f)\n" + ...
             "with an error of %f\n\n", ...
-            p,alphaMin, betaMin, gammaMin, deltaMin, NMin, M);
+            p,alphaMin, betaMin, gammaMin, deltaMin, NMin, betaMin / alphaMin, NMin / Mmax, M);
         % Store minimum parameter values for Exercise 2 Part 3
         paramMinp(pInd,:) = {alphaMin, betaMin, gammaMin, deltaMin, NMin};
     end
