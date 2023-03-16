@@ -1,4 +1,4 @@
-function [J,gammas] = SEIR_euler_allParams(t0, Tmax, I0, Y, omega2, pSet)
+function [J,gammas] = SEIR_euler_allParams(t0, Tmax, I0, Y, I, omega2, pSet)
     % gammas(alphaInd, betaInd, deltaInd, NInd, p) contains 
     % gamma as calculated to minimize p-norm of residual
     % of actual results as compared to euler model 
@@ -31,7 +31,7 @@ function [J,gammas] = SEIR_euler_allParams(t0, Tmax, I0, Y, omega2, pSet)
                         % Function defined in minimizeGamma.m
                         [gamma, ~] = minimizeGamma(t0, Tmax, Y, Rsim, p);
                         gammas(alphaInd, betaInd, deltaInd, NInd, pInd) = gamma;
-                        
+                        minVal = objectiveFunction(Y(t0:t0+Tmax),Rsim,I(1:Tmax+1),Isim,gamma,1,p);
                         J(alphaInd, betaInd, deltaInd, NInd, pInd) = minVal;
                     end
                 end

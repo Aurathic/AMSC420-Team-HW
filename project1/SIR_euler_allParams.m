@@ -30,7 +30,8 @@ function [J,gammas] = SIR_euler_allParams(t0, Tmax, I0, Y, I, omega1, pSet)
                     % Function defined in minimizeGamma.m
                     [gamma, ~] = minimizeGamma(t0, Tmax, Y, Rsim, p);
                     gammas(alphaInd, betaInd, NInd, pInd) = gamma;
-                    J(alphaInd, betaInd, NInd, pInd) = objectiveFunction(Y(t0:t0+Tmax), Rsim, I(1:Tmax+1), Isim, gamma, 1, p);
+                    minVal = objectiveFunction(Y(t0:t0+Tmax), Rsim, I(1:Tmax+1), Isim, gamma, 1, p);
+                    J(alphaInd, betaInd, NInd, pInd) = minVal;
                 end
             end
         end
